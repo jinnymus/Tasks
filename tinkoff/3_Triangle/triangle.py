@@ -30,6 +30,7 @@ import sys
 import unittest
 import math
 
+
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 logger = logging.getLogger('test')
 
@@ -67,12 +68,14 @@ class TestTriangle(unittest.TestCase):
     def setUpClass(cls):
         '''
         get triangle once for test suite
-        :return:
         '''
         cls.triangle = cls.triagle_extended()
 
     class triagle_extended():
         def __init__(self):
+            '''
+            Get basic triangle and add sides
+            '''
             self.triangle = getTriangle()
             self.A = math.sqrt((self.triangle.X2 - self.triangle.X1) ** 2 + (self.triangle.Y2 - self.triangle.Y1) ** 2)
             self.B = math.sqrt((self.triangle.X3 - self.triangle.X2) ** 2 + (self.triangle.Y3 - self.triangle.Y2) ** 2)
@@ -87,7 +90,10 @@ class TestTriangle(unittest.TestCase):
             logging.debug('hypot: ' + str(self.hypot))
             logging.debug('sides: ' + str(self.sides))
 
-    def test_coordinates(self):
+    def test_sides(self):
+        '''
+        Test that sum of two sides more than third
+        '''
         msg = 'this is not triagle, sides assert'
         self.assertGreater(self.triangle.A + self.triangle.B, self.triangle.C, msg)
         self.assertGreater(self.triangle.A + self.triangle.C, self.triangle.B, msg)
@@ -95,6 +101,9 @@ class TestTriangle(unittest.TestCase):
 
 
     def test_angles(self):
+        '''
+        Test summ of angles
+        '''
         msg = 'this is not triagle, 90 angle assert'
         angle1 = math.degrees(math.asin(self.triangle.sides[1] / self.triangle.sides[0]))
         angle2 = math.degrees(math.asin(self.triangle.sides[1] / self.triangle.sides[0]))
@@ -102,6 +111,11 @@ class TestTriangle(unittest.TestCase):
 
 
     def test_pifagor(self):
+        '''
+
+        Test pifagor theory
+
+        '''
         msg = 'this is not triagle, pifagor assert'
         self.assertEqual(math.sqrt((self.triangle.sides[1]) ** 2 + (self.triangle.sides[2]) ** 2), self.triangle.sides[0], msg)
 
